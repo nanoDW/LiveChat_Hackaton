@@ -1,9 +1,10 @@
 import React from 'react';
+import MemeGenerator from './MemeGenerator';
 
 function App() {
   return (
     <div className="App">
-     hello world
+      <MemeGenerator/>
     </div>
   );
 }
