@@ -1,9 +1,10 @@
 import React from 'react';
+import { Wall } from './components/Wall.js'
 
 function App() {
   return (
     <div className="App">
-     hello world
+     <Wall></Wall>
     </div>
   );
 }
