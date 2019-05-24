@@ -1,0 +1,22 @@
+{
+  "name": "livechat_hackaton",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"cd server && node server.js\" \"cd client && npm start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nanoDW/LiveChat_Hackaton.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nanoDW/LiveChat_Hackaton/issues"
+  },
+  "homepage": "https://github.com/nanoDW/LiveChat_Hackaton#readme",
+  "dependencies": {
+    "concurrently": "^4.1.0"
+  }
+}
