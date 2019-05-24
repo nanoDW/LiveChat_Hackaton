@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const express = require("express");
+const db = require("./db/db")();
 
 const API_PORT = 3001;
 

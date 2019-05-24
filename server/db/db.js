@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const config = require('./config/default.json');
+const config = require('../config/default.json');
 
 module.exports = function () {
     const db = config.db;
