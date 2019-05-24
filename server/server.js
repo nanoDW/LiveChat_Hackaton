@@ -1,5 +1,6 @@
 const express = require("express");
 const LiveChatApi = require('livechatapi').LiveChatApi;
+const db = require("./db/db")();
 
 const API_PORT = 3001;
 
