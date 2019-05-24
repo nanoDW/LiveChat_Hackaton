@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/nanoDW/LiveChat_Hackaton#readme",
   "dependencies": {
+    "axios": "^0.18.0",
     "concurrently": "^4.1.0"
   }
 }
