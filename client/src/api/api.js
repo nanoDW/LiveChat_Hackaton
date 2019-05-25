@@ -1,9 +1,10 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://cors-anywhere.herokuapp.com/http://localhost:3001/api/posts',
+    baseURL: '',
     options: {
-        
+        "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
+        "Access-Control-Allow-Credentials": "true"
     },
 });
 

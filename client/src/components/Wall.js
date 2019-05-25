@@ -3,6 +3,7 @@ import { Comment, Tooltip, Avatar, Input, Icon } from 'antd';
 import moment from 'moment';
 import 'antd/dist/antd.css';
 import api from '../api/api';
+import axios from 'axios';
 
 const { TextArea } = Input;
 
@@ -12,7 +13,8 @@ export class Wall extends React.Component {
     dislikes: 0,
     action: null,
     file: "",
-    posts: []
+    posts: [],
+    text: ''
   };
 
   componentDidMount() {
@@ -20,7 +22,7 @@ export class Wall extends React.Component {
   }
 
   fetchPosts = async () => {
-    const res = await api.get('http://localhost:3001/api/posts/');
+    const res = await axios.get('https://immense-crag-35556.herokuapp.com/');
     this.setState({ posts: res.data });
     console.log(res);
   }
@@ -41,18 +43,38 @@ export class Wall extends React.Component {
     });
   };
 
- uploadFile = (file) => {
-    // uploadPreset: 'b8m7soad'
-    console.log(file);
-    const url = `https://api.cloudinary.com/v1_1/hackaton/upload`;
-    const xhr = new XMLHttpRequest();
-    const fd = new FormData();
-    fd.append("userfile", file);
-    xhr.open('POST', url, true);
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    xhr.send(fd);
- };
-            
+  sendPost = async () => {
+      const data = {
+          user: 'kamila.spodymek@gmail.com',
+          date: Date.now(),
+          text: this.state.text
+      }
+
+     const res = await axios.post("https://immense-crag-35556.herokuapp.com/", data);
+     this.setState({ text: "" });
+
+     const updatedPosts = this.state.posts;
+     updatedPosts.push(res.data);
+     this.setState({ posts: updatedPosts })
+     console.log(res);
+  }
+
+  handleChange = (e) => {
+      this.setState({ text: e.target.value });
+      console.log(e.target.value);
+  }
+
+//  uploadFile = (file) => {
+//     // uploadPreset: 'b8m7soad'
+//     console.log(file);
+//     const url = `https://api.cloudinary.com/v1_1/hackaton/upload`;
+//     const xhr = new XMLHttpRequest();
+//     const fd = new FormData();
+//     fd.append("userfile", file);
+//     xhr.open('POST', url, true);
+//     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+//     xhr.send(fd);
+//  };
 
   render() {
     const actions = (value) => { 
@@ -102,8 +124,9 @@ export class Wall extends React.Component {
          </>
             )  
         })}
-        <TextArea rows={4} style={{ maxWidth: 500, resize: 'none' }}/>
-                    <input type="file" id="fileElem" multiple accept="image/*" onChange="uploadFile"></input>)
+        <TextArea rows={4} style={{ maxWidth: 500, resize: 'none' }} value={this.state.text} onChange={this.handleChange}/>
+                    <input type="file" id="fileElem" multiple accept="image/*" ></input>
+                    <button onClick={this.sendPost}>Send Post</button>)
         </>
         );
     }
