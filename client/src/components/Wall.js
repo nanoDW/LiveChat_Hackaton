@@ -11,7 +11,8 @@ export class Wall extends React.Component {
     likes: 0,
     dislikes: 0,
     action: null,
-    file: ""
+    file: "",
+    posts: []
   };
 
   componentDidMount() {
@@ -19,7 +20,8 @@ export class Wall extends React.Component {
   }
 
   fetchPosts = async () => {
-    const res = await api.get('/all');
+    const res = await api.get('http://localhost:3001/api/posts/');
+    this.setState({ posts: res.data });
     console.log(res);
   }
 
@@ -53,56 +55,56 @@ export class Wall extends React.Component {
             
 
   render() {
-    const { action, likes, dislikes } = this.state;
-    const actions = [
-        <span>
+    const actions = (value) => { 
+         return (
+            <span>
           <Tooltip title="Like">
             <Icon
               type="like"
-              theme={action === 'liked' ? 'filled' : 'outlined'}
               onClick={this.like}
             />
           </Tooltip>
-          <span style={{ paddingLeft: 8, cursor: 'auto' }}>{likes}</span>
-        </span>,
-        <span>
-          <Tooltip title="Dislike">
-            <Icon
-              type="dislike"
-              theme={action === 'disliked' ? 'filled' : 'outlined'}
-              onClick={this.dislike}
-            />
-          </Tooltip>
-          <span style={{ paddingLeft: 8, cursor: 'auto' }}>{dislikes}</span>
-        </span>,
-        <span>Reply to</span>,
-      ];
+          <span style={{ paddingLeft: 8, cursor: 'auto' }}>{value}</span>
+         </span>)
+      }
+
     return (
         <>
+        {this.state.posts.map(post => {
+            return (
+            <>
             <Comment
-                actions={actions}
-                author={<a>Han Solo</a>}
+                actions={actions(post.likesCount)}
+                author={<a>{post.name}</a>}
                 avatar={
                     <Avatar
-                    src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                    src={post.avatar}
                     alt="Han Solo"/>}
                     content={
-                        <p>
-                            We supply a series of design principles, practical patterns and high quality design
-                            resources (Sketch and Axure), to help people create their product prototypes beautifully
-                            and efficiently.
-                        </p>
+                        <p>{post.text}</p>
                     }
                     datetime={
                         <Tooltip title={moment().format('YYYY-MM-DD HH:mm:ss')}>
-                        <span>{moment().fromNow()}</span>
+                        <span>{moment().from(post.date)}</span>
                         </Tooltip>
                     }
                     style = {{ width: '50%', minWidth: 400 }}
                     />
-                    <TextArea rows={4} style={{ maxWidth: 500, resize: 'none' }}/>
-                    <input type="file" id="fileElem" multiple accept="image/*" onChange="uploadFile"></input>
+                    <span>
+          <Tooltip title="Like">
+            <Icon
+              type="like"
+              onClick={this.like}
+            />
+          </Tooltip>
+          <span style={{ paddingLeft: 8, cursor: 'auto' }}>{post.likesCount}</span>
+         </span>
+         </>
+            )  
+        })}
+        <TextArea rows={4} style={{ maxWidth: 500, resize: 'none' }}/>
+                    <input type="file" id="fileElem" multiple accept="image/*" onChange="uploadFile"></input>)
         </>
         );
     }
-}   
+}
