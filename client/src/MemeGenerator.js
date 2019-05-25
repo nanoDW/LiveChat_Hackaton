@@ -30,7 +30,7 @@ class MemeGenerator extends React.Component{
                         <img style={{maxWidth: 500, maxHeight:500 }} src={this.state.memes.url} />
                     </div>
                     <div>
-                       <button onClick = {(e) => this.clicked()}>Click</button>
+                       <button onClick = {(e) => this.clicked()}>Gvie me next!</button>
                     </div>
                 </div>
             );
