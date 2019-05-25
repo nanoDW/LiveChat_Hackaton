@@ -1,22 +1,25 @@
 import React from 'react';
 import axios from 'axios';
 
+
 class MemeGenerator extends React.Component{
-    state = {meme: []};
+    state = {memes: []};
 
     componentDidMount(){
         this.getMeme();
     }
-
-    async getMeme (){
-        const response = await axios.get('https://api.imgflip.com/get_memes');
-        this.setState({ meme: response.data});
-        console.log(this.state.meme);
-    }
+    async getMeme() {
+            const response = await axios.get('https://meme-api.herokuapp.com/gimme');
+            this.setState({ memes: response.data });
+            console.log(response.data.url);
+        }
     render() {
-        return(
-            <div>fgh</div>
-        )
-    }
+            return(
+                <div>
+                    <img src={this.state.memes.url}/>
+                </div>
+            );
+        }
+
 }
 export default MemeGenerator;

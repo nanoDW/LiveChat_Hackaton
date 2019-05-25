@@ -1,12 +1,14 @@
-import React from 'react';
-import { Wall } from './components/Wall.js'
-import MemeGenerator from './MemeGenerator';
+import React from "react";
+import BreakAlert from "./components/BreakAlert";
+import { Wall } from "./components/Wall.js";
+import MemeGenerator from "./MemeGenerator";
 
 function App() {
   return (
     <div className="App">
-     <Wall></Wall>
-      <MemeGenerator/>
+      <BreakAlert />
+      <Wall />
+      <MemeGenerator />
     </div>
   );
 }
