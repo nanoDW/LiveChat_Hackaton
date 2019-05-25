@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-
+import { Button } from 'antd';
 
 class MemeGenerator extends React.Component{
     state = {
@@ -30,7 +30,7 @@ class MemeGenerator extends React.Component{
                         <img style={{maxWidth: 500, maxHeight:500 }} src={this.state.memes.url} />
                     </div>
                     <div>
-                       <button onClick = {(e) => this.clicked()}>Gvie me next!</button>
+                       <Button type = "primary" size = "large" onClick = {(e) => this.clicked()}>Give me next!</Button>
                     </div>
                 </div>
             );
