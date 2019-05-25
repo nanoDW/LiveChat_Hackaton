@@ -68,6 +68,7 @@ posts.put("/", async (req, res) => {
   /*  const { error } = validatePost(req.body);
   if (error) return res.status(400).send(error.details[0].message); */
 
+
   const post = await Post.findOneAndUpdate(
     {
       user: req.body.user,
