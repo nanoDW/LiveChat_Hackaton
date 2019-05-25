@@ -1,8 +1,14 @@
 const mongoose = require("mongoose");
 const express = require("express");
+const LiveChatApi = require("livechatapi").LiveChatApi;
 
 const { Post, validatePost } = require("../models/post");
 const posts = express.Router();
+
+const api = new LiveChatApi(
+  "kamila.spodymek@gmail.com",
+  "c73e145c22855a6775ad2424476c9b6f"
+);
 
 posts.get("/all/", async (req, res) => {
   //console.log("test");
@@ -47,13 +53,21 @@ posts.post("/", async (req, res) => {
     text: req.body.text,
     attachment: req.body.attachment
   });
-  post = await post.save();
-  res.send(post);
+
+  await api.agents.get(req.body.user, async data => {
+    post.name = data.name;
+    post.avatar = data.avatar;
+
+    post = await post.save();
+
+    res.send(post);
+  });
 });
 
 posts.put("/", async (req, res) => {
   /*  const { error } = validatePost(req.body);
   if (error) return res.status(400).send(error.details[0].message); */
+
 
   const post = await Post.findOneAndUpdate(
     {
@@ -116,7 +130,7 @@ posts.put("/like/", async (req, res) => {
   //console.log(post);
   postSent = await post.save();
 
-  res.send(postSent); 
+  res.send(postSent);
 });
 
 function validateLike(post, likeGiver) {

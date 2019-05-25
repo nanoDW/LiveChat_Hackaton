@@ -31,7 +31,7 @@ export class Wall extends React.Component {
     this.setState({
       likes: 1,
       dislikes: 0,
-      action: 'liked',
+      action: "liked"
     });
   };
 
@@ -39,7 +39,7 @@ export class Wall extends React.Component {
     this.setState({
       likes: 0,
       dislikes: 1,
-      action: 'disliked',
+      action: "disliked"
     });
   };
 

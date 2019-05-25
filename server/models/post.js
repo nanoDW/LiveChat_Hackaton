@@ -11,6 +11,12 @@ const Post = mongoose.model(
       minlength: 3,
       required: true
     },
+    name: {
+      type: String,
+    },
+    avatar: {
+      type: String,
+    },
     date: {
       type: Date,
       default: Date.now

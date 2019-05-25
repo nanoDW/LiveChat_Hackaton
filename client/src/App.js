@@ -20,17 +20,11 @@ function App() {
         mode="horizontal"
         style={{ display: "flex" }}
       >
-        <Menu.Item
-          key="wall"
-          style={{ width: "20%", minWidth: 150, textAlign: "center" }}
-        >
+        <Menu.Item key="wall" style={{ width: "50%", textAlign: "center" }}>
           <Icon type="container" />
           Wall
         </Menu.Item>
-        <Menu.Item
-          key="memes"
-          style={{ width: "20%", minWidth: 150, textAlign: "center" }}
-        >
+        <Menu.Item key="memes" style={{ width: "50%", textAlign: "center" }}>
           <Icon type="snippets" />
           Memes
         </Menu.Item>
