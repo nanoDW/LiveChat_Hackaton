@@ -7,7 +7,7 @@ import "./MemeGenerator.css";
 
 class MemeGenerator extends React.Component {
   state = {
-    memes: []
+    meme: []
   };
 
     abortController = new AbortController();
@@ -17,29 +17,26 @@ class MemeGenerator extends React.Component {
     }
     async getMeme() {
             const response = await axios.get('https://meme-api.herokuapp.com/gimme');
-            this.setState({ memes: response.data });
-            console.log(response.data.url);
+            this.setState({ meme: response.data });
+            console.log(response.data);
     }
-       clicked = async () => {
+    async clicked() {
             const response = await axios.get('https://meme-api.herokuapp.com/gimme');
-            this.setState({ memes: response.data });
+            this.setState({ meme: response.data });
             console.log(this.state.memes.url)
         }  
     render() {
             return(
                 <>
                 <div>
-                    {this.state.meme.url ?  <img className="meme-container" src={this.state.meme.url} alt="mem"/> : <div className="container"><Spin size="large"/></div>}
+                    {this.state.meme.url ? (<img className="meme-container" src={this.state.meme.url} alt="mem"/>) : (<div className="container"><Spin size="large"/></div>)}
                 </div>
-                    <div>
-                       <Button type = "primary" size = "large" onClick = {(e) => this.clicked()}>Give me next!</Button>
-                    </div>
-
         <Button
           className="meme-button"
           type="primary"
           size="large"
-          onClick={e => this.clicked()}
+          onClick={this.clicked}
+          style={{ margin: '0 auto', display: 'block' }}
         >
           Give me next!
         </Button>

@@ -4,6 +4,7 @@ import moment from 'moment';
 import 'antd/dist/antd.css';
 import api from '../api/api';
 import axios from 'axios';
+import '../style.css'
 
 const { TextArea } = Input;
 
@@ -22,7 +23,7 @@ export class Wall extends React.Component {
   }
 
   fetchPosts = async () => {
-    const res = await axios.get('https://immense-crag-35556.herokuapp.com/');
+    const res = await axios.get('http://localhost:3001/api/posts/');
     this.setState({ posts: res.data });
     console.log(res);
   }
@@ -50,7 +51,7 @@ export class Wall extends React.Component {
           text: this.state.text
       }
 
-     const res = await axios.post("https://immense-crag-35556.herokuapp.com/", data);
+     const res = await axios.post('http://localhost:3001/api/posts/', data);
      this.setState({ text: "" });
 
      const updatedPosts = this.state.posts;
@@ -61,7 +62,6 @@ export class Wall extends React.Component {
 
   handleChange = (e) => {
       this.setState({ text: e.target.value });
-      console.log(e.target.value);
   }
 
 //  uploadFile = (file) => {
@@ -94,7 +94,7 @@ export class Wall extends React.Component {
         <>
         {this.state.posts.map(post => {
             return (
-            <>
+            <div class="chat">
             <Comment
                 actions={actions(post.likesCount)}
                 author={<a>{post.name}</a>}
@@ -110,18 +110,18 @@ export class Wall extends React.Component {
                         <span>{moment().from(post.date)}</span>
                         </Tooltip>
                     }
-                    style = {{ width: '50%', minWidth: 400 }}
+                    style = {{ width: '100%', minWidth: '350px' }}
                     />
-                    <span>
-          <Tooltip title="Like">
-            <Icon
+                     <Icon
               type="like"
               onClick={this.like}
+              style={{ padding: 0, margin: 0 }}
             />
-          </Tooltip>
           <span style={{ paddingLeft: 8, cursor: 'auto' }}>{post.likesCount}</span>
+                    <span style={{ padding: 0 }}>
+           
          </span>
-         </>
+         </div>
             )  
         })}
         <TextArea rows={4} style={{ maxWidth: 500, resize: 'none' }} value={this.state.text} onChange={this.handleChange}/>
