@@ -1,11 +1,8 @@
-import React from 'react';
+import React from "react";
+import BreakAlert from "./components/BreakAlert";
 
 function App() {
-  return (
-    <div className="App">
-     hello world
-    </div>
-  );
+  return <BreakAlert />;
 }
 
 export default App;
