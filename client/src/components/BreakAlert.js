@@ -7,7 +7,7 @@ import Breathe from "./Breathe";
 
 class BreakAlert extends React.Component {
   state = {
-    visible: true,
+    visible: false,
     nextBreak: moment()
       .add(1, "hour")
       .startOf("hour")
