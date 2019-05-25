@@ -20,23 +20,30 @@ const Post = mongoose.model(
       default: ""
     },
     attachment: {
-        type: String,
-        default: "",
+      type: String,
+      default: ""
+    },
+    likesCountArray: {
+      type: [String],
+      default: []
     },
     likesCount: {
-        type: Number,
-        default: 0
+      type: Number,
+      default: 0
     }
   })
 );
 
 function validatePost(post) {
   const schemaPost = {
-    user: Joi.string().email().min(3).required(),
+    user: Joi.string()
+      .email()
+      .min(3)
+      .required(),
     date: Joi.date(),
     text: Joi.string(),
     attachment: Joi.string(),
-    likesCount: Joi.number()
+    likesCountArray: Joi.array().items(Joi.string())
   };
   return Joi.validate(post, schemaPost);
 }
