@@ -2,6 +2,7 @@ import React from 'react';
 import { Comment, Tooltip, Avatar, Input, Icon } from 'antd';
 import moment from 'moment';
 import 'antd/dist/antd.css';
+import api from '../api/api';
 
 const { TextArea } = Input;
 
@@ -12,6 +13,15 @@ export class Wall extends React.Component {
     action: null,
     file: ""
   };
+
+  componentDidMount() {
+    this.fetchPosts();
+  }
+
+  fetchPosts = async () => {
+    const res = await api.get('/all');
+    console.log(res);
+  }
 
   like = () => {
     this.setState({
