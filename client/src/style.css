@@ -1,0 +1,10 @@
+.meme-container {
+    width: calc(100% - 30px);
+    margin: 15px;
+}
+
+.container {
+    width: 100%;
+    margin: 50px auto;
+    text-align: center;
+}

@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import { Spin } from 'antd';
+import './style.css';
 
 
 class MemeGenerator extends React.Component{
@@ -29,7 +31,8 @@ class MemeGenerator extends React.Component{
     render() {
             return(
                 <div>
-                    <img src={this.state.meme.url}/>
+                    {this.state.meme.url ?  <img className="meme-container" src={this.state.meme.url} alt="mem"/> : <div className="container"><Spin size="large"/></div>}
+                    
                 </div>
             );
         }
