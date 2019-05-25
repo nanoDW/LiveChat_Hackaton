@@ -3,14 +3,16 @@ import moment from "moment";
 import { Modal } from "antd";
 import "antd/dist/antd.css";
 import "./BreakAlert.css";
+import Breathe from "./Breathe";
 
 class BreakAlert extends React.Component {
   state = {
-    visible: false,
+    visible: true,
     nextBreak: moment()
       .add(1, "hour")
       .startOf("hour")
-      .format()
+      .format(),
+    breathe: false
   };
 
   watchTime = () => {
@@ -39,9 +41,15 @@ class BreakAlert extends React.Component {
 
   handleOk = e => {
     console.log(e);
-    this.setState({
-      visible: false
-    });
+    if (!this.state.breathe) {
+      this.setState({
+        breathe: true
+      });
+    } else {
+      this.setState({
+        visible: false
+      });
+    }
   };
 
   handleCancel = e => {
@@ -49,6 +57,27 @@ class BreakAlert extends React.Component {
     this.setState({
       visible: false
     });
+  };
+
+  displayContent = () => {
+    if (this.state.breathe) {
+      return (
+        <div className="modal-breathe">
+          <p>Breathe...</p>
+          <Breathe />
+        </div>
+      );
+    } else {
+      return (
+        <div className="modal-content">
+          <div className="modal-text">
+            <p>You have been working for 1 hour. </p>
+            <p>Do you want to have a short break?</p>
+          </div>
+          <img className="modal-image" src="/Clippy.png" alt="clippy" />
+        </div>
+      );
+    }
   };
 
   render() {
@@ -61,13 +90,7 @@ class BreakAlert extends React.Component {
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
-          <div className="modal-content">
-            <div className="modal-text">
-              <p>You have been working for 1 hour. </p>
-              <p>Do you want to have a short break?</p>
-            </div>
-            <img className="modal-image" src="/Clippy.png" alt="clippy" />
-          </div>
+          {this.displayContent()}
         </Modal>
       </div>
     );
