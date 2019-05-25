@@ -1,21 +1,16 @@
 import React from 'react';
-import { Menu, Icon, Comment, Tooltip, Avatar } from 'antd';
-import moment from 'moment'
+import { Comment, Tooltip, Avatar, Input, Icon } from 'antd';
+import moment from 'moment';
 import 'antd/dist/antd.css';
+
+const { TextArea } = Input;
 
 export class Wall extends React.Component {
   state = {
-    current: 'wall',
     likes: 0,
     dislikes: 0,
     action: null,
-  };
-
-  handleClick = e => {
-    console.log('click ', e);
-    this.setState({
-      current: e.key,
-    });
+    file: ""
   };
 
   like = () => {
@@ -34,35 +29,46 @@ export class Wall extends React.Component {
     });
   };
 
-  renderView = () => {
-      switch(this.state.current) {
-          case 'wall': 
-          { 
-            const { action, likes, dislikes } = this.state;
-            const actions = [
-                <span>
-                  <Tooltip title="Like">
-                    <Icon
-                      type="like"
-                      theme={action === 'liked' ? 'filled' : 'outlined'}
-                      onClick={this.like}
-                    />
-                  </Tooltip>
-                  <span style={{ paddingLeft: 8, cursor: 'auto' }}>{likes}</span>
-                </span>,
-                <span>
-                  <Tooltip title="Dislike">
-                    <Icon
-                      type="dislike"
-                      theme={action === 'disliked' ? 'filled' : 'outlined'}
-                      onClick={this.dislike}
-                    />
-                  </Tooltip>
-                  <span style={{ paddingLeft: 8, cursor: 'auto' }}>{dislikes}</span>
-                </span>,
-                <span>Reply to</span>,
-              ];  
-            return (
+ uploadFile = (file) => {
+    // uploadPreset: 'b8m7soad'
+    console.log(file);
+    const url = `https://api.cloudinary.com/v1_1/hackaton/upload`;
+    const xhr = new XMLHttpRequest();
+    const fd = new FormData();
+    fd.append("userfile", file);
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    xhr.send(fd);
+ };
+            
+
+  render() {
+    const { action, likes, dislikes } = this.state;
+    const actions = [
+        <span>
+          <Tooltip title="Like">
+            <Icon
+              type="like"
+              theme={action === 'liked' ? 'filled' : 'outlined'}
+              onClick={this.like}
+            />
+          </Tooltip>
+          <span style={{ paddingLeft: 8, cursor: 'auto' }}>{likes}</span>
+        </span>,
+        <span>
+          <Tooltip title="Dislike">
+            <Icon
+              type="dislike"
+              theme={action === 'disliked' ? 'filled' : 'outlined'}
+              onClick={this.dislike}
+            />
+          </Tooltip>
+          <span style={{ paddingLeft: 8, cursor: 'auto' }}>{dislikes}</span>
+        </span>,
+        <span>Reply to</span>,
+      ];
+    return (
+        <>
             <Comment
                 actions={actions}
                 author={<a>Han Solo</a>}
@@ -84,29 +90,8 @@ export class Wall extends React.Component {
                     }
                     style = {{ width: '50%', minWidth: 400 }}
                     />
-            )
-          }
-          default:
-              {
-                  return null;
-              }
-      }
-  }
-
-  render() {
-    return (
-        <>
-            <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal" style= {{ display: 'flex' }}>
-                <Menu.Item key="wall" style={{ width: '20%', minWidth: 150, textAlign: 'center' }}>
-                <Icon type="container" />
-                    Wall
-                </Menu.Item>
-                <Menu.Item key="memes" style={{ width: '20%', minWidth: 150, textAlign: 'center' }}>
-                <Icon type="snippets" />
-                    Memes
-                </Menu.Item>
-            </Menu>
-            {this.renderView()}
+                    <TextArea rows={4} style={{ maxWidth: 500, resize: 'none' }}/>
+                    <input type="file" id="fileElem" multiple accept="image/*" onChange="uploadFile"></input>
         </>
         );
     }
